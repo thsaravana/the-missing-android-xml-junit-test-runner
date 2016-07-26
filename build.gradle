@@ -1,16 +1,28 @@
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots'
-        }
+        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
     }
-    def flowVer = System.getProperty('flow.version') ?: System.getenv('FLOW_VERSION') ?: '1.+'
-    println "Using Apphance Flow version: $flowVer"
     dependencies {
-        classpath("com.apphance.flow:apphance-flow:$flowVer")
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.apphance.flow:apphance-flow:1.1.3'
     }
 }
 
-apply plugin: 'apphance-flow'
+apply plugin: 'com.android.application'
+apply plugin: 'flow-nbs'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion = "22.0.1"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.android.support.test:runner:0.5'
+}
